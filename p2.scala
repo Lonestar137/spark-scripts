@@ -139,5 +139,4 @@ object hive extends OutputFunctions {
         val df = spark.read.format("orc").option("inferSchema", true).option("headers", true).load("hdfs://sandbox-hdp.hortonworks.com:8020/warehouse/tablespace/managed/hive/"+db+".db/"+tablename)
         df
     }
-
 }
