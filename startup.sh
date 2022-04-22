@@ -1,1 +1,1 @@
-spark-shell -i p2.scala
+spark-shell -i scripts/p2.scala
