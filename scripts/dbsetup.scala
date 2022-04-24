@@ -148,8 +148,26 @@ object hive extends OutputFunctions {
     }
 }
 
-//var colnames = Array("col1", "col2", "col3")
-//example of renaming the columns
-//var x = df; for(i <- 0 to df.columns.length-1) try{ x = x.withColumnRenamed(df.columns(i), colnames(i)) } catch { case e: Exception => println("OH no")}
 
 //call to webserver goes here.
+
+
+//spark-shell script that asks for IP of your vm
+//then jdbcs to hive, loads setup.sql to string and executes it.
+//
+//
+//
+//
+//
+
+val sql_string = scala.io.Source.fromFile("./sql/setup.sql").mkString
+//get user input 
+val user = scala.io.StdIn.readLine("Enter username: ")
+val password = scala.io.StdIn.readLine("Enter password: ")
+val server = scala.io.StdIn.readLine("Enter hive server and port(i.e. localhost:10000): ")
+hive.setCreds(user, password, "default", server)
+hive.executeQuery(sql_string)
+println("Setup complete")
+
+
+
