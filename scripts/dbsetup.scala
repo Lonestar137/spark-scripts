@@ -161,12 +161,15 @@ object hive extends OutputFunctions {
 //
 
 val sql_string = scala.io.Source.fromFile("./sql/setup.sql").mkString
+//remove all ; from string
+val queries = sql_string.split(";").toList
+
 //get user input 
 val user = scala.io.StdIn.readLine("Enter username: ")
 val password = scala.io.StdIn.readLine("Enter password: ")
 val server = scala.io.StdIn.readLine("Enter hive server and port(i.e. localhost:10000): ")
 hive.setCreds(user, password, "default", server)
-hive.executeQuery(sql_string)
+queries.foreach(query => hive.executeQuery(query))
 println("Setup complete")
 
 

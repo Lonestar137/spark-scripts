@@ -1,0 +1,9 @@
+# Kill all yarn applications
+yarn application --list | awk '{print $1}' | grep application | xargs yarn application -kill 
+
+
+# inside spark-shell
+# creates a new sparkSession with hive support.
+val spark = org.apache.spark.sql.SparkSession.builder.master("local").appName("Revature").enableHiveSupport().getOrCreate();
+
+
