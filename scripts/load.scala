@@ -68,6 +68,26 @@ def dividendOverYears() : DataFrame=
     return result;
 }
 
+//5 What is the 95% VaR of Walmart and Target
+def VaR() : DataFrame=
+{
+    val result = hiveContext.sql("SELECT (1.65 * STDDEV_POP(wmt.close)) AS `VaR 95%`, (2.33 * STDDEV_POP(wmt.close)) AS `VaR 99%` FROM wmt")
+    return result;
+}
+
+//6a What is the D/E (long_term_debt/stockholders_equity) ratio for Walmart over the years? 
+def ratioOverYears() : DataFrame=
+{
+    val result = hiveContext.sql("SELECT `date`, (long_term_debt/stockholders_equity) AS `D/E Ratio` FROM wmt_annual_bal_sht ORDER BY `date` DESC")
+    return result;
+}
+//6b What is the average D/E ratio and is the current 2021 D/E ratio beyond normal limits (std(?
+def ratioBeyondLimits() : DataFrame=
+{
+    val result = hiveContext.sql("SELECT AVG(long_term_debt/stockholders_equity) AS `Avg D/E Ratio`, STDDEV_POP(long_term_debt/stockholders_equity) AS `Std Dev of D/E Ratio` FROM wmt_annual_bal_sht")
+    return result;
+}
+
 //Load the tables into a DF
 val tgt = spark.sql("select * from tgt")
 val tgt_div = spark.sql("select * from tgt_div")
