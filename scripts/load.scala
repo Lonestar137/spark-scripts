@@ -1,6 +1,8 @@
 import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.sql.DataFrame
 
+val hiveContext= new HiveContext(sc)
+
 
 
 def printRed(str: String, newLine: Boolean = true) = {
@@ -86,7 +88,6 @@ object HiveHandler{
 
 }
 
-val hiveContext= new HiveContext(sc)
 spark.sql("use blue_team")
 spark.conf.set("spark.sql.crossJoin.enabled", true)
 
