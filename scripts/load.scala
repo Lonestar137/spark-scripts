@@ -32,11 +32,12 @@ object HiveHandler{
     //Add the function to each function so that it checks the RDD
     
     //1. write a function finds standard deviation between two stock tables with same schema.
-    def printDev(table1: String="wmt", table2: String="tgt") : DataFrame =
+    def standardDeviation(table1: String="wmt", table2: String="tgt") : DataFrame =
     {
         val result =hiveContext.sql("SELECT STDDEV_POP("+table1+".close) AS `"+table1+" Historical Volatility`, STDDEV_POP("+table2+".close) AS `"+table2+" Historical Volatility` FROM "+table1+", "+table2+" WHERE "+table1+".`date`="+table2+".`date`")
         return result;
     }
+
     //2. Write a function that finds the months of a year in which Walmart has the highest volatility.
     def highestVolatility(table: String="wmt") : DataFrame=
     {
@@ -52,33 +53,35 @@ object HiveHandler{
     }
 
     //TODO continue refactor
-    //4a Write a function that finds the dividend of walmart over years
-    def dividendOver50() : DataFrame=
+    //4a Function that finds the dividend of a company over years
+    def dividendOver50(stock: String="wmt", stock_div: String="wmt_div") : DataFrame=
     {
-        val result = hiveContext.sql("SELECT AVG(div_yield) AS `dividend yield` FROM(SELECT (wmt_div.dividends/wmt.close) AS `div_yield` FROM wmt, wmt_div WHERE wmt.`date`=wmt_div.`date`)wmt, wmt_div")
+        val result = hiveContext.sql(s"SELECT AVG(div_yield) AS `dividend yield` FROM(SELECT ($stock_div.dividends/$stock.close) AS `div_yield` FROM $stock, $stock_div WHERE $stock.`date`=$stock_div.`date`)$stock, $stock_div")
         return result;
     }
 
     //4b Write a function that finds if dividend has grown or decline
-    def dividendOverYears() : DataFrame=
+    def dividendOverYears(stock: String="wmt", stock_div: String="wmt_div") : DataFrame=
     {
-        val result = hiveContext.sql("SELECT wmt.`date`, (wmt_div.dividends/wmt.close) AS `dividend yield` FROM wmt, wmt_div WHERE wmt.`date` = wmt_div.`date` ORDER BY wmt.`date` DESC")
+        val result = hiveContext.sql(s"SELECT $stock.`date`, ($stock_div.dividends/$stock.close) AS `dividend yield` FROM $stock, $stock_div WHERE $stock.`date` = $stock_div.`date` ORDER BY $stock.`date` DESC")
         return result;
     }
 
     //5 What is the 95% VaR of Walmart and Target
-    def VaR() : DataFrame=
+    def VaR(stock: String="wmt") : DataFrame=
     {
-        val result = hiveContext.sql("SELECT (1.65 * STDDEV_POP(wmt.close)) AS `VaR 95%`, (2.33 * STDDEV_POP(wmt.close)) AS `VaR 99%` FROM wmt")
+        val result = hiveContext.sql(s"SELECT (1.65 * STDDEV_POP($stock.close)) AS `VaR 95%`, (2.33 * STDDEV_POP($stock.close)) AS `VaR 99%` FROM $stock")
         return result;
     }
 
+    //==No longer used==
     //6a What is the D/E (long_term_debt/stockholders_equity) ratio for Walmart over the years? 
     def ratioOverYears() : DataFrame=
     {
         val result = hiveContext.sql("SELECT `date`, (long_term_debt/stockholders_equity) AS `D/E Ratio` FROM wmt_annual_bal_sht ORDER BY `date` DESC")
         return result;
     }
+
     //6b What is the average D/E ratio and is the current 2021 D/E ratio beyond normal limits (std(?
     def ratioBeyondLimits() : DataFrame=
     {
