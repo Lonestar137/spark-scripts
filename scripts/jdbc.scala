@@ -17,8 +17,8 @@ def jd(table: String)={
     df
 }
 val df = spark.read.format("jdbc")
-    .option("url", "jdbc:hive2://publicsandbox:10000/test")
-    .option("dbtable", "tgt")
+    .option("url", "jdbc:hive2://publicsandbox:10000/blue_team")
+    .option("dbtable", "wmt")
     .option("user", "hive")
     .option("password", "hive")
     .load()

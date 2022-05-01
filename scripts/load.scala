@@ -95,12 +95,10 @@ spark.sql("use blue_team")
 spark.conf.set("spark.sql.crossJoin.enabled", true)
 
 //Load the tables into a DF
-val tgt = spark.sql("select * from tgt")
-val tgt_div = spark.sql("select * from tgt_div")
+val tgt = spark.sql("select * from tgt").where(col("`date`").isNotNull).show
+val tgt_div = spark.sql("select * from tgt_div").where(col("`date`").isNotNull).show
 
-val wmt = spark.sql("select * from wmt")
-val wmt_div = spark.sql("select * from wmt_div")
-
-
+val wmt = spark.sql("select * from wmt").where(col("`date`").isNotNull).show
+val wmt_div = spark.sql("select * from wmt_div").where(col("`date`").isNotNull).show
 
 
