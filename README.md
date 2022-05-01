@@ -33,4 +33,4 @@ database from a set of csv files automatically.
 
 This project uses the following [License](<https://github.com/Lonestar137/spark-scripts/blob/add-license-1/LICENSE>).
 
- <img src="https://github.com/maxlandan/Portfolio/blob/main/Image1.jpg" height=200> <img src="https://github.com/maxlandan/Portfolio/blob/main/Image2.jpg" height=200>
+ <img src="https://github.com/Lonestar137/spark-scripts/blob/add-license-1/Image1.jpg" height=200> <img src="https://github.com/maxlandan/Portfolio/blob/main/Image2.jpg" height=200>
