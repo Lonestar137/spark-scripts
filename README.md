@@ -22,7 +22,7 @@ database from a set of csv files automatically.
 - Git + GitHub
 - JIRA
 
-### Colaborators
+### Collaborators
 * Andre Xie
 * Mohammad Aydin
 * Ed Osmulski
